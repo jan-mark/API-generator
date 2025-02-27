@@ -11,7 +11,14 @@ async function getCat(){
 }
 
 async function getQuotes() {
-    const response = await fetch('https://inspirobot.me/api?generate=true');
-    const data = await response.text();
-    document.getElementById('quotesImage').src = data;
+    try {
+        const response = await fetch('https://inspirobot.me/api?generate=true');
+        if (!response.ok) throw new Error("Failed to fetch");
+        const data = await response.text();
+        console.log("Fetched Quote Image URL:", data);
+        document.getElementById('quotesImage').src = data;
+    } catch (error) {
+        console.error("Error fetching quote:", error);
+    }
 }
+
